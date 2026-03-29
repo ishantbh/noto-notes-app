@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import type { Note } from '../types'
+import { formatDate } from '../utils/fomatters'
 
 type NoteCardProps = {
   note: Note
@@ -17,7 +18,7 @@ export function NoteCard({ note }: NoteCardProps) {
           {note.content}
         </p>
         <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
-          {note.createdAt}
+          {formatDate(note.createdAt)}
         </time>
       </div>
     </Link>
