@@ -1,5 +1,7 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import type { Note } from '../types'
+
+const NOTES_STORAGE_KEY = 'notes'
 
 type NotesContextType = {
   notes: Note[]
@@ -14,7 +16,14 @@ export const NotesContext = createContext<NotesContextType>({
 })
 
 export function NotesProvider({ children }: { children: React.ReactNode }) {
-  const [notes, setNotes] = useState<Note[]>([])
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const storedNotes = localStorage.getItem(NOTES_STORAGE_KEY)
+    return storedNotes ? JSON.parse(storedNotes) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes))
+  }, [notes])
 
   function getNoteById(id: string) {
     return notes.find((note) => note.id === id)
