@@ -1,3 +1,7 @@
 export default function Home() {
-  return <div>Home</div>
+  return (
+    <div className='container mx-auto p-4'>
+      <div>Notes</div>
+    </div>
+  )
 }
