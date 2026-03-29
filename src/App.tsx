@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import Home from './pages/Home'
-import { Root } from './layouts/Root'
+import { Root } from './layouts'
+import { Home } from './pages'
 
 export default function App() {
   return (

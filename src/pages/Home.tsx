@@ -1,5 +1,5 @@
-import { NoteCard } from '../components/NoteCard'
 import type { Note } from '../types'
+import { NoteCard } from '../components'
 
 export default function Home() {
   const dummyNotes: Note[] = [
