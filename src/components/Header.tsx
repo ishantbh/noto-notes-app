@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react'
 import { Link } from 'react-router'
 
 export function Header() {
@@ -7,7 +8,11 @@ export function Header() {
         <h1 className='text-3xl font-extrabold tracking-tight'>
           <Link to='/'>Noto</Link>
         </h1>
-        <Link to='/create' className='btn'>
+        <Link
+          to='/create'
+          className='btn flex items-center justify-center gap-2'
+        >
+          <Plus className='size-5' aria-hidden />
           New Note
         </Link>
       </div>

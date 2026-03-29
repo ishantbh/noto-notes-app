@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router'
 import { useNotes } from '../hooks/useNotes'
 import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
+import { ArrowLeft, Pencil, Trash2 } from 'lucide-react'
 
 export default function NoteDetails() {
   let note: Note | undefined
@@ -28,9 +29,13 @@ function NoteDetailsView({ note }: { note: Note }) {
         <div className='flex items-center gap-2 mb-4'>
           <h2 className='text-3xl font-bold grow'>{note.title}</h2>
           <Link to={`/notes/${note.id}/edit`} className='btn'>
-            Edit
+            <Pencil className='size-5' aria-hidden />
+            <span className='sr-only'>Edit</span>
           </Link>
-          <button className='btn bg-red-400 hover:bg-red-500'>Delete</button>
+          <button className='btn bg-red-400 hover:bg-red-500'>
+            <Trash2 className='size-5' aria-hidden />
+            <span className='sr-only'>Delete</span>
+          </button>
         </div>
         <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
           {formatDate(note.createdAt)}
@@ -50,7 +55,8 @@ function NoteNotFound() {
       <p className='text-neutral-500 mb-4'>
         The note you are looking for does not exist!
       </p>
-      <Link to='/' className='btn'>
+      <Link to='/' className='btn flex items-center justify-center gap-2'>
+        <ArrowLeft className='size-5' aria-hidden />
         Go Back Home
       </Link>
     </div>
