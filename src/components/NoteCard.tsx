@@ -10,7 +10,7 @@ export function NoteCard({ note }: NoteCardProps) {
   return (
     <Link
       to={`/notes/${note.id}`}
-      className='block bg-white p-4 rounded-xl shadow-sm transition hover:shadow-md'
+      className='block bg-white p-6 rounded-xl shadow-sm transition hover:shadow-md'
     >
       <div className='flex flex-col gap-1 h-full'>
         <h2 className='font-bold text-xl'>{note.title}</h2>
