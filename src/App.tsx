@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Root } from './layouts'
-import { Create, Home, NoteDetails } from './pages'
+import { Create, Home, NoteDetails, NotFound } from './pages'
 
 export default function App() {
   return (
@@ -10,6 +10,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path='create' element={<Create />} />
           <Route path='notes/:id' element={<NoteDetails />} />
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
