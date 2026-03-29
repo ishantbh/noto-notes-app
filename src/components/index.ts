@@ -1,4 +1,5 @@
 import { Header } from './Header'
 import { NoteCard } from './NoteCard'
+import { NotesList } from './NotesList'
 
-export { Header, NoteCard }
+export { Header, NoteCard, NotesList }
