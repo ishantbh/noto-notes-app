@@ -1,19 +1,32 @@
+import { useNavigate } from 'react-router'
+import { useNotes } from '../hooks/useNotes'
+
 export default function Create() {
+  const navigate = useNavigate()
+
+  const { createNote } = useNotes()
+
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const formData = new FormData(event.target)
+    const form = event.target
 
-    const title = formData.get('title')
-    const content = formData.get('content')
+    const formData = new FormData(form)
+
+    const title = formData.get('title')?.toString()
+    const content = formData.get('content')?.toString()
 
     if (!title || !content) {
       alert('Please fill all the fields')
       return
     }
 
-    // TODO: Save the note
-    console.log(Object.fromEntries(formData))
+    // Save the note
+    createNote({ title, content })
+
+    form.reset()
+
+    navigate('/')
   }
 
   return (
