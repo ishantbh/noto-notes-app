@@ -7,12 +7,14 @@ type NotesContextType = {
   notes: Note[]
   getNoteById: (id: string) => Note | undefined
   createNote: (note: Omit<Note, 'id' | 'createdAt'>) => void
+  deleteNote: (id: string) => void
 }
 
 export const NotesContext = createContext<NotesContextType>({
   notes: [],
   getNoteById: () => undefined,
   createNote: () => {},
+  deleteNote: () => {},
 })
 
 export function NotesProvider({ children }: { children: React.ReactNode }) {
@@ -40,8 +42,14 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
     setNotes((prevNotes) => [...prevNotes, newNote])
   }
 
+  function deleteNote(id: string) {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id))
+  }
+
   return (
-    <NotesContext.Provider value={{ notes, getNoteById, createNote }}>
+    <NotesContext.Provider
+      value={{ notes, getNoteById, createNote, deleteNote }}
+    >
       {children}
     </NotesContext.Provider>
   )

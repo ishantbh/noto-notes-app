@@ -2,7 +2,8 @@ import { Link, useParams } from 'react-router'
 import { useNotes } from '../hooks/useNotes'
 import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
-import { ArrowLeft, Pencil, Trash2 } from 'lucide-react'
+import { ArrowLeft, Pencil } from 'lucide-react'
+import { DeleteButton } from '../components/DeleteButton'
 
 export default function NoteDetails() {
   let note: Note | undefined
@@ -32,10 +33,7 @@ function NoteDetailsView({ note }: { note: Note }) {
             <Pencil className='size-5' aria-hidden />
             <span className='sr-only'>Edit</span>
           </Link>
-          <button className='btn bg-red-400 hover:bg-red-500'>
-            <Trash2 className='size-5' aria-hidden />
-            <span className='sr-only'>Delete</span>
-          </button>
+          <DeleteButton id={note.id} />
         </div>
         <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
           {formatDate(note.createdAt)}
