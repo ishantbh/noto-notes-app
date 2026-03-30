@@ -39,7 +39,7 @@ function NoteDetailsView({ note }: { note: Note }) {
         <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
           {formatDate(note.createdAt)}
         </time>
-        <p className='text-lg text-neutral-500 tracking-wide leading-relaxed'>
+        <p className='text-lg text-neutral-500 tracking-wide leading-relaxed whitespace-pre-wrap'>
           {note.content}
         </p>
       </div>
