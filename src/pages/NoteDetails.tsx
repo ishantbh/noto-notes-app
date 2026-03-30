@@ -3,8 +3,9 @@ import { useNotes } from '../hooks/useNotes'
 import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
 import { Pencil } from 'lucide-react'
-import { DeleteButton } from '../components'
-import { NoteNotFound } from '../components'
+import { DeleteButton, NoteNotFound } from '../components'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default function NoteDetails() {
   let note: Note | undefined
@@ -27,8 +28,8 @@ export default function NoteDetails() {
 function NoteDetailsView({ note }: { note: Note }) {
   return (
     <div className='flex flex-col gap-4'>
-      <div className='w-full max-w-xl mx-auto'>
-        <div className='flex items-center gap-2 mb-4'>
+      <div className='w-full max-w-2xl mx-auto'>
+        <div className='flex items-center gap-2 mb-2'>
           <h2 className='text-3xl font-bold grow'>{note.title}</h2>
           <Link to={`/notes/${note.id}/edit`} className='btn'>
             <Pencil className='size-5' aria-hidden />
@@ -36,12 +37,12 @@ function NoteDetailsView({ note }: { note: Note }) {
           </Link>
           <DeleteButton id={note.id} />
         </div>
-        <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
+        <time dateTime={note.createdAt} className='text-sm text-neutral-500'>
           {formatDate(note.createdAt)}
         </time>
-        <p className='text-lg text-neutral-500 tracking-wide leading-relaxed whitespace-pre-wrap'>
-          {note.content}
-        </p>
+        <div className='bg-white prose prose-neutral max-w-none mt-4 p-4 rounded-md'>
+          <Markdown remarkPlugins={[remarkGfm]}>{note.content}</Markdown>
+        </div>
       </div>
     </div>
   )
