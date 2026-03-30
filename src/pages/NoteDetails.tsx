@@ -2,8 +2,9 @@ import { Link, useParams } from 'react-router'
 import { useNotes } from '../hooks/useNotes'
 import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
-import { ArrowLeft, Pencil } from 'lucide-react'
-import { DeleteButton } from '../components/DeleteButton'
+import { Pencil } from 'lucide-react'
+import { DeleteButton } from '../components'
+import { NoteNotFound } from '../components'
 
 export default function NoteDetails() {
   let note: Note | undefined
@@ -42,21 +43,6 @@ function NoteDetailsView({ note }: { note: Note }) {
           {note.content}
         </p>
       </div>
-    </div>
-  )
-}
-
-function NoteNotFound() {
-  return (
-    <div className='flex flex-col items-center'>
-      <h2 className='text-2xl font-medium mt-1'>Not Found</h2>
-      <p className='text-neutral-500 mb-4'>
-        The note you are looking for does not exist!
-      </p>
-      <Link to='/' className='btn flex items-center justify-center gap-2'>
-        <ArrowLeft className='size-5' aria-hidden />
-        Go Back Home
-      </Link>
     </div>
   )
 }
