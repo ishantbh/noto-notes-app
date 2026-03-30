@@ -15,7 +15,7 @@ export function DeleteConfirmDialog({
         <div className='flex items-center justify-end gap-3'>
           <button
             onClick={handleCancel}
-            className='block px-4 py-2 border border-transparent rounded-md cursor-pointer transition font-medium bg-transparent text-neutral-500 hover:border-neutral-400'
+            className='btn-outline text-neutral-500'
           >
             Cancel
           </button>

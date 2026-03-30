@@ -4,4 +4,8 @@
   .btn {
     @apply block bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer transition hover:bg-blue-600 font-medium;
   }
+
+  .btn-outline {
+    @apply block px-4 py-2 border border-transparent rounded-md cursor-pointer transition font-medium bg-transparent hover:border-neutral-400;
+  }
 }
