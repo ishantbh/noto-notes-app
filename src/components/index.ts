@@ -5,6 +5,7 @@ import { Header } from './Header'
 import { NoteCard } from './NoteCard'
 import { NoteNotFound } from './NoteNotFound'
 import { NotesList } from './NotesList'
+import { ThemeToggle } from './ThemeToggle'
 
 export {
   AddEditForm,
@@ -14,4 +15,5 @@ export {
   NoteCard,
   NoteNotFound,
   NotesList,
+  ThemeToggle,
 }

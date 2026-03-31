@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { Link } from 'react-router'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Header() {
   return (
@@ -8,13 +9,17 @@ export function Header() {
         <h1 className='text-3xl font-extrabold tracking-tight'>
           <Link to='/'>Noto</Link>
         </h1>
-        <Link
-          to='/create'
-          className='btn flex items-center justify-center gap-2'
-        >
-          <Plus className='size-5' aria-hidden />
-          New Note
-        </Link>
+        <div className='flex items-center gap-4'>
+          <Link
+            to='/create'
+            className='btn flex items-center justify-center gap-2'
+          >
+            <Plus className='size-5' aria-hidden />
+            New Note
+          </Link>
+
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
