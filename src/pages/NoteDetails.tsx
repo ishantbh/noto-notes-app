@@ -37,10 +37,13 @@ function NoteDetailsView({ note }: { note: Note }) {
           </Link>
           <DeleteButton id={note.id} />
         </div>
-        <time dateTime={note.createdAt} className='text-sm text-neutral-500'>
+        <time
+          dateTime={note.createdAt}
+          className='text-sm text-neutral-500 dark:text-neutral-400'
+        >
           {formatDate(note.createdAt)}
         </time>
-        <div className='bg-white prose prose-neutral max-w-none mt-4 p-4 rounded-md'>
+        <div className='bg-card prose prose-neutral max-w-none mt-4 p-4 rounded-md dark:prose-invert'>
           <Markdown remarkPlugins={[remarkGfm]}>{note.content}</Markdown>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Header } from '../components'
 
 export function Root() {
   return (
-    <div className='min-h-screen w-full flex flex-col bg-blue-50'>
+    <div className='min-h-screen w-full flex flex-col'>
       <Header />
       <main className='grow'>
         <Outlet />

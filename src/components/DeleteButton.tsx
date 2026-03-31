@@ -30,7 +30,7 @@ export function DeleteButton({ id }: DeleteButtonProps) {
     <>
       <button
         onClick={() => setIsDialogOpen(true)}
-        className='btn bg-red-400 hover:bg-red-500'
+        className='btn bg-destructive hover:bg-destructive/80'
       >
         <Trash2 className='size-5' aria-hidden />
         <span className='sr-only'>Delete</span>

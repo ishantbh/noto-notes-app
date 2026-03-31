@@ -33,7 +33,7 @@ export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
   }
 
   return (
-    <div className='w-full max-w-xl mx-auto bg-neutral-50 p-8 rounded-md shadow'>
+    <div className='w-full max-w-xl mx-auto bg-card border border-foreground/10 p-8 rounded-md'>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <div className='flex flex-col gap-1 w-full'>
           <label htmlFor='title' className='font-medium text-sm'>
@@ -45,7 +45,7 @@ export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
             name='title'
             defaultValue={note?.title}
             placeholder='My amazing note title'
-            className='border px-2 py-1 rounded-md border-neutral-500'
+            className='border px-2 py-1 rounded-md border-neutral-400 dark:border-neutral-500'
             required
           />
         </div>
@@ -58,7 +58,7 @@ export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
             id='content'
             defaultValue={note?.content}
             placeholder="What's on your mind?"
-            className='border px-2 py-1 rounded-md border-neutral-500'
+            className='border px-2 py-1 rounded-md border-neutral-400 dark:border-neutral-500'
             rows={10}
             required
           ></textarea>

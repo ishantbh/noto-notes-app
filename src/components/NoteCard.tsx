@@ -11,14 +11,17 @@ export function NoteCard({ note }: NoteCardProps) {
   return (
     <Link
       to={`/notes/${note.id}`}
-      className='block bg-white p-6 rounded-xl shadow-sm transition hover:shadow-md'
+      className='block bg-card p-6 rounded-xl shadow-sm transition hover:shadow-md shadow-foreground/10 border border-foreground/10'
     >
       <div className='flex flex-col gap-1 h-full'>
         <h2 className='font-bold text-xl'>{note.title}</h2>
-        <p className='line-clamp-2 text-neutral-500 mb-2 grow whitespace-pre-wrap'>
+        <p className='line-clamp-2 text-neutral-500 dark:text-neutral-400 mb-2 grow whitespace-pre-wrap'>
           {removeMd(note.content)}
         </p>
-        <time dateTime={note.createdAt} className='text-sm text-neutral-400'>
+        <time
+          dateTime={note.createdAt}
+          className='text-sm text-neutral-400 dark:text-neutral-500'
+        >
           {formatDate(note.createdAt)}
         </time>
       </div>
