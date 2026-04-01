@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { Plus } from 'lucide-react'
 import { ThemeToggle } from '@/components'
+import { Button } from '@/components/ui/button'
 
 export function Header() {
   return (
@@ -10,13 +11,12 @@ export function Header() {
           <Link to='/'>Noto</Link>
         </h1>
         <div className='flex items-center gap-4'>
-          <Link
-            to='/create'
-            className='btn flex items-center justify-center gap-2'
-          >
-            <Plus className='size-5' aria-hidden />
-            New Note
-          </Link>
+          <Button asChild>
+            <Link to='/create'>
+              <Plus className='size-5' aria-hidden />
+              <span>New Note</span>
+            </Link>
+          </Button>
 
           <ThemeToggle />
         </div>
