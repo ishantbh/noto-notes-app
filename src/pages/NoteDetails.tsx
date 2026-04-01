@@ -1,22 +1,18 @@
 import { Link, useParams } from 'react-router'
-import { useNotes } from '../hooks/useNotes'
 import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
 import { Pencil } from 'lucide-react'
 import { DeleteButton, NoteNotFound } from '../components'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { useNotesStore } from '../store/useNotesStore'
 
 export default function NoteDetails() {
-  let note: Note | undefined
-
   const { id } = useParams()
 
-  const { getNoteById } = useNotes()
-
-  if (id) {
-    note = getNoteById(id)
-  }
+  const note = useNotesStore((state) =>
+    state.notes.find((note) => note.id === id),
+  )
 
   return (
     <div className='container mx-auto px-4 py-8'>

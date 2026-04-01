@@ -1,9 +1,9 @@
 import { Link } from 'react-router'
-import { useNotes } from '../hooks/useNotes'
 import { NoteCard } from './NoteCard'
+import { useNotesStore } from '../store/useNotesStore'
 
 export function NotesList() {
-  const { notes } = useNotes()
+  const notes = useNotesStore((state) => state.notes)
 
   if (notes.length === 0) {
     return (

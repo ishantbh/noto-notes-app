@@ -1,13 +1,13 @@
-import { useNotes } from '../hooks/useNotes'
 import { AddEditForm } from '../components'
 import type { Note } from '../types'
 import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router'
+import { useNotesStore } from '../store/useNotesStore'
 
 export default function Create() {
   const navigate = useNavigate()
 
-  const { createNote } = useNotes()
+  const createNote = useNotesStore((state) => state.createNote)
 
   function handleSubmit({ title, content }: Omit<Note, 'id' | 'createdAt'>) {
     if (!title || !content) return
