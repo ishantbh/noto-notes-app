@@ -1,13 +1,15 @@
 import { Link } from 'react-router'
-import type { Note } from '../types'
 import { formatDate } from '../utils/fomatters'
 import removeMd from 'remove-markdown'
+import { useNotesStore } from '../store/useNotesStore'
 
 type NoteCardProps = {
-  note: Note
+  noteId: string
 }
 
-export function NoteCard({ note }: NoteCardProps) {
+export function NoteCard({ noteId }: NoteCardProps) {
+  const note = useNotesStore((state) => state.notes[noteId])
+
   return (
     <Link
       to={`/notes/${note.id}`}

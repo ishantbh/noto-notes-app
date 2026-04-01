@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import type { Note } from '../types'
 
 type NotesStore = {
-  notes: Note[]
+  notes: Record<string, Note>
   createNote: (note: Omit<Note, 'id' | 'createdAt'>) => void
   updateNote: (note: Note) => void
   deleteNote: (id: string) => void
@@ -12,7 +12,7 @@ type NotesStore = {
 export const useNotesStore = create<NotesStore>()(
   persist(
     (set) => ({
-      notes: [],
+      notes: {},
 
       createNote: ({ title, content }) => {
         const newNote: Note = {
@@ -23,22 +23,25 @@ export const useNotesStore = create<NotesStore>()(
         }
 
         set((state) => ({
-          notes: [...state.notes, newNote],
+          notes: { ...state.notes, [newNote.id]: newNote },
         }))
       },
 
       updateNote: (updatedNote) => {
         set((state) => ({
-          notes: state.notes.map((note) =>
-            note.id === updatedNote.id ? updatedNote : note,
-          ),
+          notes: {
+            ...state.notes,
+            [updatedNote.id]: updatedNote,
+          },
         }))
       },
 
       deleteNote: (id) => {
-        set((state) => ({
-          notes: state.notes.filter((note) => note.id !== id),
-        }))
+        set((state) => {
+          const { [id]: _, ...rest } = state.notes
+
+          return { notes: rest }
+        })
       },
     }),
     { name: 'notes-storage' },

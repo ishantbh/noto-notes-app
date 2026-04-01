@@ -7,9 +7,7 @@ import { useNotesStore } from '../store/useNotesStore'
 export default function Edit() {
   const { id } = useParams()
 
-  const note = useNotesStore((state) =>
-    state.notes.find((note) => note.id === id),
-  )
+  const note = useNotesStore((state) => (id ? state.notes[id] : null))
 
   return (
     <div className='container mx-auto px-4 py-8'>
