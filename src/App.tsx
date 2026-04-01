@@ -1,8 +1,20 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Root } from './layouts'
 import { Create, Edit, Home, NoteDetails, NotFound } from './pages'
+import { useEffect } from 'react'
+import { useThemeStore } from './store/useThemeStore'
 
 export default function App() {
+  const theme = useThemeStore((state) => state.theme)
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
+
   return (
     <BrowserRouter>
       <Routes>

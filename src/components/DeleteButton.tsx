@@ -1,15 +1,15 @@
 import { Trash2 } from 'lucide-react'
 import { DeleteConfirmDialog } from './DeleteConfirmDialog'
 import { useState } from 'react'
-import { useNotes } from '../hooks/useNotes'
 import { useNavigate } from 'react-router'
+import { useNotesStore } from '../store/useNotesStore'
 
 type DeleteButtonProps = {
   id: string
 }
 
 export function DeleteButton({ id }: DeleteButtonProps) {
-  const { deleteNote } = useNotes()
+  const deleteNote = useNotesStore((state) => state.deleteNote)
   const navigate = useNavigate()
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)

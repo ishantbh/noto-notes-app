@@ -1,19 +1,13 @@
 import { useNavigate, useParams } from 'react-router'
-import { useNotes } from '../hooks/useNotes'
 import { AddEditForm, NoteNotFound } from '../components'
 import type { Note } from '../types'
 import { ArrowLeft } from 'lucide-react'
+import { useNotesStore } from '../store/useNotesStore'
 
 export default function Edit() {
-  let note: Note | undefined
-
   const { id } = useParams()
 
-  const { getNoteById } = useNotes()
-
-  if (id) {
-    note = getNoteById(id)
-  }
+  const note = useNotesStore((state) => (id ? state.notes[id] : null))
 
   return (
     <div className='container mx-auto px-4 py-8'>
@@ -25,7 +19,7 @@ export default function Edit() {
 function EditView({ note }: { note: Note }) {
   const navigate = useNavigate()
 
-  const { updateNote } = useNotes()
+  const updateNote = useNotesStore((state) => state.updateNote)
 
   function handleSubmit({ title, content }: Omit<Note, 'id' | 'createdAt'>) {
     if (!title || !content) return

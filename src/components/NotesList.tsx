@@ -1,11 +1,12 @@
 import { Link } from 'react-router'
-import { useNotes } from '../hooks/useNotes'
 import { NoteCard } from './NoteCard'
+import { useNotesStore } from '../store/useNotesStore'
 
 export function NotesList() {
-  const { notes } = useNotes()
+  const notes = useNotesStore((state) => state.notes)
+  const noteIds = Object.keys(notes)
 
-  if (notes.length === 0) {
+  if (noteIds.length === 0) {
     return (
       <div className='text-center flex flex-col items-center'>
         <h2 className='text-2xl font-medium mt-1'>No notes yet</h2>
@@ -21,8 +22,8 @@ export function NotesList() {
 
   return (
     <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-      {notes.map((note) => (
-        <NoteCard key={note.id} note={note} />
+      {noteIds.map((noteId) => (
+        <NoteCard key={noteId} noteId={noteId} />
       ))}
     </div>
   )
