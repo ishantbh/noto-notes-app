@@ -1,8 +1,8 @@
-import { AddEditForm } from '../components'
-import type { Note } from '../types'
-import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router'
-import { useNotesStore } from '../store/useNotesStore'
+import { ArrowLeft } from 'lucide-react'
+import type { Note } from '@/types'
+import { useNotesStore } from '@/store'
+import { AddEditForm } from '@/components'
 
 export default function Create() {
   const navigate = useNavigate()

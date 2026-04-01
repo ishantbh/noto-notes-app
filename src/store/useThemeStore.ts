@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Theme } from '../types'
+import type { Theme } from '@/types'
 
 type ThemeStore = {
   theme: Theme

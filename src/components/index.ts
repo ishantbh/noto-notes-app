@@ -1,11 +1,11 @@
-import { AddEditForm } from './AddEditForm'
-import { DeleteButton } from './DeleteButton'
-import { DeleteConfirmDialog } from './DeleteConfirmDialog'
-import { Header } from './Header'
-import { NoteCard } from './NoteCard'
-import { NoteNotFound } from './NoteNotFound'
-import { NotesList } from './NotesList'
-import { ThemeToggle } from './ThemeToggle'
+import { AddEditForm } from '@/components/AddEditForm'
+import { DeleteButton } from '@/components/DeleteButton'
+import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { Header } from '@/components/Header'
+import { NoteCard } from '@/components/NoteCard'
+import { NoteNotFound } from '@/components/NoteNotFound'
+import { NotesList } from '@/components/NotesList'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 export {
   AddEditForm,

@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
-import { formatDate } from '../utils/fomatters'
 import removeMd from 'remove-markdown'
-import { useNotesStore } from '../store/useNotesStore'
+import { useNotesStore } from '@/store'
+import { formatDate } from '@/utils'
 
 type NoteCardProps = {
   noteId: string

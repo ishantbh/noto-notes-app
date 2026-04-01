@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Note } from '../types'
+import type { Note } from '@/types'
 
 type NotesStore = {
   notes: Record<string, Note>

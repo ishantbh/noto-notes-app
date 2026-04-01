@@ -1,11 +1,11 @@
 import { Link, useParams } from 'react-router'
-import type { Note } from '../types'
-import { formatDate } from '../utils/fomatters'
-import { Pencil } from 'lucide-react'
-import { DeleteButton, NoteNotFound } from '../components'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { useNotesStore } from '../store/useNotesStore'
+import { Pencil } from 'lucide-react'
+import type { Note } from '@/types'
+import { formatDate } from '@/utils'
+import { useNotesStore } from '@/store'
+import { DeleteButton, NoteNotFound } from '@/components'
 
 export default function NoteDetails() {
   const { id } = useParams()

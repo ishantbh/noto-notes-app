@@ -1,4 +1,4 @@
-import { NotesList } from '../components'
+import { NotesList } from '@/components'
 
 export default function Home() {
   return (

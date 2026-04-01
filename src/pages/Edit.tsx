@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router'
-import { AddEditForm, NoteNotFound } from '../components'
-import type { Note } from '../types'
 import { ArrowLeft } from 'lucide-react'
-import { useNotesStore } from '../store/useNotesStore'
+import type { Note } from '@/types'
+import { useNotesStore } from '@/store'
+import { AddEditForm, NoteNotFound } from '@/components'
 
 export default function Edit() {
   const { id } = useParams()

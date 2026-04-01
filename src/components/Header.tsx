@@ -1,6 +1,6 @@
-import { Plus } from 'lucide-react'
 import { Link } from 'react-router'
-import { ThemeToggle } from './ThemeToggle'
+import { Plus } from 'lucide-react'
+import { ThemeToggle } from '@/components'
 
 export function Header() {
   return (

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import type { Note } from '../types'
+import type { Note } from '@/types'
 
 type AddEditFormProps = {
   onSubmit: (data: Omit<Note, 'id' | 'createdAt'>) => void

@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Routes } from 'react-router'
-import { Root } from './layouts'
-import { Create, Edit, Home, NoteDetails, NotFound } from './pages'
 import { useEffect } from 'react'
-import { useThemeStore } from './store/useThemeStore'
+import { BrowserRouter, Route, Routes } from 'react-router'
+import { useThemeStore } from '@/store'
+import { Root } from '@/layouts'
+import { Create, Edit, Home, NoteDetails, NotFound } from '@/pages'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)

@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
-import { NoteCard } from './NoteCard'
-import { useNotesStore } from '../store/useNotesStore'
+import { NoteCard } from '@/components'
+import { useNotesStore } from '@/store'
 
 export function NotesList() {
   const notes = useNotesStore((state) => state.notes)

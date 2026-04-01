@@ -1,8 +1,8 @@
-import { Trash2 } from 'lucide-react'
-import { DeleteConfirmDialog } from './DeleteConfirmDialog'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useNotesStore } from '../store/useNotesStore'
+import { Trash2 } from 'lucide-react'
+import { useNotesStore } from '@/store'
+import { DeleteConfirmDialog } from '@/components'
 
 type DeleteButtonProps = {
   id: string
