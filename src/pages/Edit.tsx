@@ -2,6 +2,13 @@ import { useParams } from 'react-router'
 import type { Note } from '@/types'
 import { useNotesStore } from '@/store'
 import { AddEditForm, NoteNotFound } from '@/components'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default function Edit() {
   const { id } = useParams()
@@ -27,12 +34,16 @@ function EditView({ note }: { note: Note }) {
 
   return (
     <div>
-      <div className='w-full max-w-xl mx-auto mb-8 text-center'>
-        <h2 className='text-xl font-extrabold'>Edit Note</h2>
-        <p className='text-neutral-500'>Edit an existing note</p>
-      </div>
+      <Card className='w-full sm:max-w-2xl mx-auto'>
+        <CardHeader>
+          <CardTitle>Edit Note</CardTitle>
+          <CardDescription>Edit an existing note</CardDescription>
+        </CardHeader>
 
-      <AddEditForm onSubmit={handleSubmit} note={note} />
+        <CardContent>
+          <AddEditForm onSubmit={handleSubmit} note={note} />
+        </CardContent>
+      </Card>
     </div>
   )
 }
