@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { Trash2 } from 'lucide-react'
 import { useNotesStore } from '@/store'
 import { DeleteConfirmDialog } from '@/components'
+import { Button } from '@/components/ui/button'
 
 type DeleteButtonProps = {
   id: string
@@ -28,13 +29,14 @@ export function DeleteButton({ id }: DeleteButtonProps) {
 
   return (
     <>
-      <button
+      <Button
+        variant='destructive'
+        size='icon'
         onClick={() => setIsDialogOpen(true)}
-        className='btn bg-destructive hover:bg-destructive/80'
       >
-        <Trash2 className='size-5' aria-hidden />
+        <Trash2 aria-hidden />
         <span className='sr-only'>Delete</span>
-      </button>
+      </Button>
 
       {isDialogOpen && (
         <DeleteConfirmDialog

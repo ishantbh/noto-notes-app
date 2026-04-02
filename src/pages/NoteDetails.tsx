@@ -6,6 +6,14 @@ import type { Note } from '@/types'
 import { formatDate } from '@/utils'
 import { useNotesStore } from '@/store'
 import { DeleteButton, NoteNotFound } from '@/components'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default function NoteDetails() {
   const { id } = useParams()
@@ -21,26 +29,37 @@ export default function NoteDetails() {
 
 function NoteDetailsView({ note }: { note: Note }) {
   return (
-    <div className='flex flex-col gap-4'>
-      <div className='w-full max-w-2xl mx-auto'>
-        <div className='flex items-center gap-2 mb-2'>
-          <h2 className='text-3xl font-bold grow'>{note.title}</h2>
-          <Link to={`/notes/${note.id}/edit`} className='btn'>
-            <Pencil className='size-5' aria-hidden />
-            <span className='sr-only'>Edit</span>
-          </Link>
-          <DeleteButton id={note.id} />
-        </div>
-        <time
-          dateTime={note.createdAt}
-          className='text-sm text-neutral-500 dark:text-neutral-400'
-        >
-          {formatDate(note.createdAt)}
-        </time>
-        <div className='bg-card prose prose-neutral max-w-none mt-4 p-4 rounded-md dark:prose-invert'>
+    <Card className='max-w-3xl mx-auto'>
+      <CardHeader>
+        <CardTitle>
+          <h2 className='text-2xl'>{note.title}</h2>
+          <time
+            dateTime={note.createdAt}
+            className='text-xs text-muted-foreground'
+          >
+            {formatDate(note.createdAt)}
+          </time>
+        </CardTitle>
+
+        <CardAction>
+          <div className='space-x-2'>
+            <Button variant='outline' size='icon' asChild>
+              <Link to={`/notes/${note.id}/edit`}>
+                <Pencil aria-hidden />
+                <span className='sr-only'>Edit</span>
+              </Link>
+            </Button>
+
+            <DeleteButton id={note.id} />
+          </div>
+        </CardAction>
+      </CardHeader>
+
+      <CardContent>
+        <div className='prose dark:prose-invert max-w-full'>
           <Markdown remarkPlugins={[remarkGfm]}>{note.content}</Markdown>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
