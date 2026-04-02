@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
-import { NoteCard } from './NoteCard'
-import { useNotesStore } from '../store/useNotesStore'
+import { NoteCard } from '@/components'
+import { useNotesStore } from '@/store'
+import { Button } from '@/components/ui/button'
 
 export function NotesList() {
   const notes = useNotesStore((state) => state.notes)
@@ -13,9 +14,11 @@ export function NotesList() {
         <p className='text-neutral-500 mb-4'>
           Create a new note to get started
         </p>
-        <Link to='/create' className='btn'>
-          Create Note
-        </Link>
+        <Button asChild>
+          <Link to='/create' className='btn'>
+            Create Note
+          </Link>
+        </Button>
       </div>
     )
   }

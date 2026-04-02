@@ -1,13 +1,36 @@
 import { Moon, Sun } from 'lucide-react'
-import { useThemeStore } from '../store/useThemeStore'
+import { useThemeStore } from '@/store'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 export function ThemeToggle() {
-  const theme = useThemeStore((state) => state.theme)
-  const toggleTheme = useThemeStore((state) => state.toggleTheme)
+  const setTheme = useThemeStore((state) => state.setTheme)
 
   return (
-    <button className='btn' onClick={() => toggleTheme()}>
-      {theme === 'light' ? <Sun /> : <Moon />}
-    </button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant='outline' size='icon'>
+          <Sun className='h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90' />
+          <Moon className='absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0' />
+          <span className='sr-only'>Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end'>
+        <DropdownMenuItem onClick={() => setTheme('light')}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme('dark')}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme('system')}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

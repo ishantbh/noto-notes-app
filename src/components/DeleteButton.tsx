@@ -1,8 +1,18 @@
-import { Trash2 } from 'lucide-react'
-import { DeleteConfirmDialog } from './DeleteConfirmDialog'
-import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useNotesStore } from '../store/useNotesStore'
+import { Trash2 } from 'lucide-react'
+import { useNotesStore } from '@/store'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { toast } from 'sonner'
 
 type DeleteButtonProps = {
   id: string
@@ -12,36 +22,37 @@ export function DeleteButton({ id }: DeleteButtonProps) {
   const deleteNote = useNotesStore((state) => state.deleteNote)
   const navigate = useNavigate()
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-
   function handleDelete() {
     deleteNote(id)
-    setIsDialogOpen(false)
-    navigate('/', {
-      replace: true,
-    })
-  }
-
-  function handleCancel() {
-    setIsDialogOpen(false)
+    toast.success('Note deleted successfully')
+    navigate('/', { replace: true })
   }
 
   return (
-    <>
-      <button
-        onClick={() => setIsDialogOpen(true)}
-        className='btn bg-destructive hover:bg-destructive/80'
-      >
-        <Trash2 className='size-5' aria-hidden />
-        <span className='sr-only'>Delete</span>
-      </button>
+    <Dialog>
+      <DialogTrigger>
+        <Button variant='destructive' size='icon'>
+          <Trash2 aria-hidden />
+          <span className='sr-only'>Delete</span>
+        </Button>
+      </DialogTrigger>
 
-      {isDialogOpen && (
-        <DeleteConfirmDialog
-          handleDelete={handleDelete}
-          handleCancel={handleCancel}
-        />
-      )}
-    </>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className='text-xl'>Are you sure?</DialogTitle>
+          <DialogDescription>This action cannot be undone.</DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant='outline'>Cancel</Button>
+          </DialogClose>
+
+          <Button onClick={handleDelete} variant='destructive'>
+            Delete
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
