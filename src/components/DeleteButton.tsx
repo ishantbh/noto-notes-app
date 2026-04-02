@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { toast } from 'sonner'
 
 type DeleteButtonProps = {
   id: string
@@ -23,6 +24,7 @@ export function DeleteButton({ id }: DeleteButtonProps) {
 
   function handleDelete() {
     deleteNote(id)
+    toast.success('Note deleted successfully')
     navigate('/', { replace: true })
   }
 

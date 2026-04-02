@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import { useThemeStore } from '@/store'
 import { Root } from '@/layouts'
 import { Create, Edit, Home, NoteDetails, NotFound } from '@/pages'
+import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)
@@ -26,18 +27,21 @@ export default function App() {
   }, [theme])
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Root />}>
-          <Route index element={<Home />} />
-          <Route path='create' element={<Create />} />
-          <Route path='notes/:id'>
-            <Route index element={<NoteDetails />} />
-            <Route path='edit' element={<Edit />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Root />}>
+            <Route index element={<Home />} />
+            <Route path='create' element={<Create />} />
+            <Route path='notes/:id'>
+              <Route index element={<NoteDetails />} />
+              <Route path='edit' element={<Edit />} />
+            </Route>
+            <Route path='*' element={<NotFound />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+      <Toaster closeButton richColors />
+    </>
   )
 }
