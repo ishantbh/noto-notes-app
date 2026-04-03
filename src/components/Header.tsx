@@ -44,11 +44,19 @@ export function Header() {
               </Button>
             </>
           ) : (
-            <Button asChild>
-              <Link to='/login'>
-                <span>Login</span>
-              </Link>
-            </Button>
+            <>
+              <Button asChild>
+                <Link to='/login'>
+                  <span>Login</span>
+                </Link>
+              </Button>
+
+              <Button variant='secondary' asChild>
+                <Link to='/signup'>
+                  <span>Sign Up</span>
+                </Link>
+              </Button>
+            </>
           )}
 
           <ThemeToggle />
