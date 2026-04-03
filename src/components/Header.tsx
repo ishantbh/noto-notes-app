@@ -1,11 +1,22 @@
+import { useTransition } from 'react'
 import { Link } from 'react-router'
-import { Plus } from 'lucide-react'
+import { LogOut, Plus } from 'lucide-react'
 import { useAuthStore } from '@/store'
+import { logout } from '@/lib/auth'
 import { ThemeToggle } from '@/components'
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 
 export function Header() {
+  const [isLoggingOut, startTransition] = useTransition()
+
   const user = useAuthStore((state) => state.user)
+
+  function handleLogout() {
+    startTransition(async () => {
+      await logout()
+    })
+  }
 
   return (
     <header className='shadow-sm shadow-foreground/10'>
@@ -15,12 +26,23 @@ export function Header() {
         </h1>
         <div className='flex items-center gap-2'>
           {user ? (
-            <Button asChild>
-              <Link to='/create'>
-                <Plus className='size-5' aria-hidden />
-                <span>New Note</span>
-              </Link>
-            </Button>
+            <>
+              <Button asChild>
+                <Link to='/create'>
+                  <Plus className='size-5' aria-hidden />
+                  <span>New Note</span>
+                </Link>
+              </Button>
+
+              <Button
+                variant='secondary'
+                size='icon'
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+              >
+                {isLoggingOut ? <Spinner /> : <LogOut />}
+              </Button>
+            </>
           ) : (
             <Button asChild>
               <Link to='/login'>
