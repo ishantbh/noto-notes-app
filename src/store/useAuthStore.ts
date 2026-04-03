@@ -1,10 +1,10 @@
-import type { User } from 'firebase/auth'
+import type { AppUser } from '@/types'
 import { create } from 'zustand'
 
 type AuthState = {
-  user: User | null
+  user: AppUser | null
   initialized: boolean
-  setUser: (user: User | null) => void
+  setUser: (user: AppUser | null) => void
 }
 
 export const useAuthStore = create<AuthState>()((set) => ({

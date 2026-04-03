@@ -14,6 +14,9 @@ import {
   Signup,
 } from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
+import { getUserFromDB } from '@/lib/firestore'
+import type { AppUser } from '@/types'
+import { toast } from 'sonner'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)
@@ -38,8 +41,20 @@ export default function App() {
   }, [theme])
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user)
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      let appUser: AppUser | null = null
+
+      if (firebaseUser) {
+        try {
+          appUser = await getUserFromDB(firebaseUser.uid)
+        } catch (error) {
+          toast.error(
+            error instanceof Error ? error.message : 'Error loading user',
+          )
+        }
+      }
+
+      setUser(appUser)
     })
 
     return unsub
