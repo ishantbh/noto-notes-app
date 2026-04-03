@@ -1,12 +1,26 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { useThemeStore } from '@/store'
-import { Root } from '@/layouts'
-import { Create, Edit, Home, NoteDetails, NotFound } from '@/pages'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebase/auth'
+import { useAuthStore, useThemeStore } from '@/store'
+import { AuthLayout, ProtectedLayout, Root } from '@/layouts'
+import {
+  Create,
+  Edit,
+  Home,
+  Login,
+  NoteDetails,
+  NotFound,
+  Signup,
+} from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
+import { getUserFromDB } from '@/lib/firestore'
+import type { AppUser } from '@/types'
+import { toast } from 'sonner'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)
+  const setUser = useAuthStore((state) => state.setUser)
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -26,17 +40,44 @@ export default function App() {
     root.classList.add(theme)
   }, [theme])
 
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      let appUser: AppUser | null = null
+
+      if (firebaseUser) {
+        try {
+          appUser = await getUserFromDB(firebaseUser.uid)
+        } catch (error) {
+          toast.error(
+            error instanceof Error ? error.message : 'Error loading user',
+          )
+        }
+      }
+
+      setUser(appUser)
+    })
+
+    return unsub
+  }, [setUser])
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Root />}>
-            <Route index element={<Home />} />
-            <Route path='create' element={<Create />} />
-            <Route path='notes/:id'>
-              <Route index element={<NoteDetails />} />
-              <Route path='edit' element={<Edit />} />
+            <Route element={<ProtectedLayout />}>
+              <Route index element={<Home />} />
+              <Route path='create' element={<Create />} />
+              <Route path='notes/:id'>
+                <Route index element={<NoteDetails />} />
+                <Route path='edit' element={<Edit />} />
+              </Route>
             </Route>
+            <Route element={<AuthLayout />}>
+              <Route path='login' element={<Login />} />
+              <Route path='signup' element={<Signup />} />
+            </Route>
+
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>

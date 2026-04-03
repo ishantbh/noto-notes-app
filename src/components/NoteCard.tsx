@@ -15,11 +15,11 @@ export function NoteCard({ noteId }: NoteCardProps) {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2>
+          <h3>
             <Link to={`/notes/${note.id}`} className='hover:opacity-80'>
               {note.title}
             </Link>
-          </h2>
+          </h3>
           <time
             dateTime={note.createdAt}
             className='text-xs text-muted-foreground'

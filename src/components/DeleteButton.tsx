@@ -30,7 +30,7 @@ export function DeleteButton({ id }: DeleteButtonProps) {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant='destructive' size='icon'>
           <Trash2 aria-hidden />
           <span className='sr-only'>Delete</span>

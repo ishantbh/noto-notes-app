@@ -8,3 +8,9 @@ export function formatDate(date: string) {
 
   return dateObj.toLocaleDateString('en-US', options)
 }
+
+export function extractFirstName(name: string) {
+  const firstName = name.split(' ')[0]
+
+  return firstName
+}

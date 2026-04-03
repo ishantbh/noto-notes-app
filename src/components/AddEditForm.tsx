@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import type { Note } from '@/types'
-import { AddEditFormSchema } from '@/schema/AddEditFormSchema'
+import { AddEditFormSchema } from '@/schema'
 import {
   Field,
   FieldDescription,
