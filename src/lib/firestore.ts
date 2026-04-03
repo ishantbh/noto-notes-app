@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase/firestore'
 import type { AppUser } from '@/types'
 
@@ -9,5 +9,22 @@ export async function createUserInDB(user: AppUser) {
     console.error('Error creating user in Firestore:', error)
 
     throw new Error('Error creating user in Firestore')
+  }
+}
+
+export async function getUserFromDB(uid: string) {
+  try {
+    const docRef = doc(db, 'users', uid)
+    const snapshot = await getDoc(docRef)
+
+    if (snapshot.exists()) {
+      return snapshot.data() as AppUser
+    }
+
+    throw new Error('User not found')
+  } catch (error) {
+    console.error('Error getting user from Firestore:', error)
+
+    throw new Error('Error getting user from Firestore')
   }
 }
