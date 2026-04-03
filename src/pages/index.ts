@@ -3,5 +3,6 @@ import Create from '@/pages/Create'
 import NoteDetails from '@/pages/NoteDetails'
 import NotFound from '@/pages/NotFound'
 import Edit from '@/pages/Edit'
+import Login from '@/pages/Login'
 
-export { Home, Create, NoteDetails, NotFound, Edit }
+export { Home, Create, NoteDetails, NotFound, Edit, Login }

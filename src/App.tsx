@@ -4,7 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/auth'
 import { useAuthStore, useThemeStore } from '@/store'
 import { Root } from '@/layouts'
-import { Create, Edit, Home, NoteDetails, NotFound } from '@/pages'
+import { Create, Edit, Home, Login, NoteDetails, NotFound } from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
@@ -48,6 +48,8 @@ export default function App() {
               <Route index element={<NoteDetails />} />
               <Route path='edit' element={<Edit />} />
             </Route>
+            <Route path='login' element={<Login />} />
+
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>
