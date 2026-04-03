@@ -4,6 +4,8 @@ import {
   signOut,
 } from 'firebase/auth'
 import { auth } from '@/firebase/auth'
+import { createUserInDB } from '@/lib/firestore'
+import type { AppUser } from '@/types'
 
 export async function signupWithEmail({
   name,
@@ -14,9 +16,15 @@ export async function signupWithEmail({
   email: string
   password: string
 }) {
-  await createUserWithEmailAndPassword(auth, email, password)
+  const userCreds = await createUserWithEmailAndPassword(auth, email, password)
+  const user: AppUser = {
+    uid: userCreds.user.uid,
+    name,
+    email,
+  }
 
-  // TODO: Add user info to firestore
+  // Add user info to firestore
+  await createUserInDB(user)
 }
 
 export async function loginWithEmail({

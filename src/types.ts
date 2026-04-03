@@ -6,3 +6,9 @@ export type Note = {
   content: string
   createdAt: string
 }
+
+export type AppUser = {
+  uid: string
+  name: string
+  email: string
+}
