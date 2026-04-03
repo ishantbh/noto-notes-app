@@ -3,9 +3,16 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/auth'
 import { useAuthStore, useThemeStore } from '@/store'
-import { Root } from '@/layouts'
-import { Create, Edit, Home, Login, NoteDetails, NotFound } from '@/pages'
-import { ProtectedRoute } from '@/components'
+import { AuthLayout, ProtectedLayout, Root } from '@/layouts'
+import {
+  Create,
+  Edit,
+  Home,
+  Login,
+  NoteDetails,
+  NotFound,
+  Signup,
+} from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
@@ -43,7 +50,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Root />}>
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedLayout />}>
               <Route index element={<Home />} />
               <Route path='create' element={<Create />} />
               <Route path='notes/:id'>
@@ -51,7 +58,10 @@ export default function App() {
                 <Route path='edit' element={<Edit />} />
               </Route>
             </Route>
-            <Route path='login' element={<Login />} />
+            <Route element={<AuthLayout />}>
+              <Route path='login' element={<Login />} />
+              <Route path='signup' element={<Signup />} />
+            </Route>
 
             <Route path='*' element={<NotFound />} />
           </Route>

@@ -4,7 +4,6 @@ import { Header } from '@/components/Header'
 import { NoteCard } from '@/components/NoteCard'
 import { NoteNotFound } from '@/components/NoteNotFound'
 import { NotesList } from '@/components/NotesList'
-import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
 export {
@@ -14,6 +13,5 @@ export {
   NoteCard,
   NoteNotFound,
   NotesList,
-  ProtectedRoute,
   ThemeToggle,
 }
