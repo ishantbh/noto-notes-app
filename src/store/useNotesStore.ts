@@ -2,14 +2,14 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Note } from '@/types'
 
-type NotesStore = {
+type NotesState = {
   notes: Record<string, Note>
   createNote: (note: Omit<Note, 'id' | 'createdAt'>) => void
   updateNote: (note: Note) => void
   deleteNote: (id: string) => void
 }
 
-export const useNotesStore = create<NotesStore>()(
+export const useNotesStore = create<NotesState>()(
   persist(
     (set) => ({
       notes: {},
