@@ -1,12 +1,15 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { useThemeStore } from '@/store'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebase/auth'
+import { useAuthStore, useThemeStore } from '@/store'
 import { Root } from '@/layouts'
 import { Create, Edit, Home, NoteDetails, NotFound } from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)
+  const setUser = useAuthStore((state) => state.setUser)
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -25,6 +28,14 @@ export default function App() {
 
     root.classList.add(theme)
   }, [theme])
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setUser(user)
+    })
+
+    return unsub
+  }, [setUser])
 
   return (
     <>
