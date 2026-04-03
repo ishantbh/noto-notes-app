@@ -2,7 +2,7 @@ import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from 'react-router'
 import { FirebaseError } from 'firebase/app'
 import { toast } from 'sonner'
-import { LoginSchema } from '@/schema/LoginSchema'
+import { LoginSchema } from '@/schema'
 import { loginWithEmail } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
 import {
