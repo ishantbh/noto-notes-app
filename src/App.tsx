@@ -5,6 +5,7 @@ import { auth } from '@/firebase/auth'
 import { useAuthStore, useThemeStore } from '@/store'
 import { Root } from '@/layouts'
 import { Create, Edit, Home, Login, NoteDetails, NotFound } from '@/pages'
+import { ProtectedRoute } from '@/components'
 import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
@@ -42,11 +43,13 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Root />}>
-            <Route index element={<Home />} />
-            <Route path='create' element={<Create />} />
-            <Route path='notes/:id'>
-              <Route index element={<NoteDetails />} />
-              <Route path='edit' element={<Edit />} />
+            <Route element={<ProtectedRoute />}>
+              <Route index element={<Home />} />
+              <Route path='create' element={<Create />} />
+              <Route path='notes/:id'>
+                <Route index element={<NoteDetails />} />
+                <Route path='edit' element={<Edit />} />
+              </Route>
             </Route>
             <Route path='login' element={<Login />} />
 
