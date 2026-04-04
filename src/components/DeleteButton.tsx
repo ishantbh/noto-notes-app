@@ -1,5 +1,8 @@
+import { useTransition } from 'react'
 import { useNavigate } from 'react-router'
 import { Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
+import { deleteNoteInDB } from '@/lib/firestore'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { toast } from 'sonner'
+import { Spinner } from '@/components/ui/spinner'
 
 type DeleteButtonProps = {
   id: string
@@ -20,11 +23,20 @@ type DeleteButtonProps = {
 export function DeleteButton({ id }: DeleteButtonProps) {
   const navigate = useNavigate()
 
+  const [isDeletePending, startTransition] = useTransition()
+
   function handleDelete() {
-    // TODO: delete the note from Firestore
-    // deleteNote(id)
-    toast.success('Note deleted successfully')
-    navigate('/', { replace: true })
+    startTransition(async () => {
+      try {
+        await deleteNoteInDB(id)
+        toast.success('Note deleted successfully')
+        navigate('/', { replace: true })
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : 'Error deleting note',
+        )
+      }
+    })
   }
 
   return (
@@ -47,7 +59,12 @@ export function DeleteButton({ id }: DeleteButtonProps) {
             <Button variant='outline'>Cancel</Button>
           </DialogClose>
 
-          <Button onClick={handleDelete} variant='destructive'>
+          <Button
+            onClick={handleDelete}
+            variant='destructive'
+            disabled={isDeletePending}
+          >
+            {isDeletePending && <Spinner />}
             Delete
           </Button>
         </DialogFooter>
