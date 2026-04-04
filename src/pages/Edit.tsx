@@ -23,13 +23,15 @@ export default function Edit() {
 }
 
 function EditView({ note }: { note: Note }) {
-  const updateNote = useNotesStore((state) => state.updateNote)
-
-  function handleSubmit({ title, content }: Omit<Note, 'id' | 'createdAt'>) {
+  function handleSubmit({
+    title,
+    content,
+  }: Omit<Note, 'id' | 'createdAt' | 'userId'>) {
     if (!title || !content) return
 
     // Save the note
-    updateNote({ ...note, title, content })
+    // TODO: Update the note in Firestore
+    // updateNote({ ...note, title, content })
   }
 
   return (

@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router'
 import { Trash2 } from 'lucide-react'
-import { useNotesStore } from '@/store'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -19,11 +18,11 @@ type DeleteButtonProps = {
 }
 
 export function DeleteButton({ id }: DeleteButtonProps) {
-  const deleteNote = useNotesStore((state) => state.deleteNote)
   const navigate = useNavigate()
 
   function handleDelete() {
-    deleteNote(id)
+    // TODO: delete the note from Firestore
+    // deleteNote(id)
     toast.success('Note deleted successfully')
     navigate('/', { replace: true })
   }
