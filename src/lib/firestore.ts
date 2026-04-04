@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   serverTimestamp,
@@ -65,6 +66,19 @@ export async function updateNoteInDB(note: Note) {
       error instanceof Error
         ? error.message
         : 'Error updating note in Firestore',
+    )
+  }
+}
+
+export async function deleteNoteInDB(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  try {
+    await deleteDoc(doc(db, 'notes', id))
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : 'Error deleting note in Firestore',
     )
   }
 }
