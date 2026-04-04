@@ -1,5 +1,7 @@
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { toast } from 'sonner'
 import type { Note } from '@/types'
+import { updateNoteInDB } from '@/lib/firestore'
 import { useNotesStore } from '@/store'
 import { AddEditForm, NoteNotFound } from '@/components'
 import {
@@ -23,13 +25,25 @@ export default function Edit() {
 }
 
 function EditView({ note }: { note: Note }) {
-  const updateNote = useNotesStore((state) => state.updateNote)
+  const navigate = useNavigate()
 
-  function handleSubmit({ title, content }: Omit<Note, 'id' | 'createdAt'>) {
+  async function handleSubmit({
+    title,
+    content,
+  }: Omit<Note, 'id' | 'createdAt' | 'userId'>) {
     if (!title || !content) return
 
     // Save the note
-    updateNote({ ...note, title, content })
+    try {
+      await updateNoteInDB({ ...note, title, content })
+
+      toast.success('Note updated successfully')
+      navigate('/')
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Error updating note',
+      )
+    }
   }
 
   return (

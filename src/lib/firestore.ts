@@ -1,6 +1,15 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  Timestamp,
+} from 'firebase/firestore'
 import { db } from '@/firebase/firestore'
-import type { AppUser } from '@/types'
+import type { AppUser, Note } from '@/types'
 
 export async function createUserInDB(user: AppUser) {
   try {
@@ -26,5 +35,50 @@ export async function getUserFromDB(uid: string) {
     console.error('Error getting user from Firestore:', error)
 
     throw new Error('Error getting user from Firestore')
+  }
+}
+
+export async function createNoteInDB(note: Omit<Note, 'id' | 'createdAt'>) {
+  try {
+    await addDoc(collection(db, 'notes'), {
+      ...note,
+      createdAt: serverTimestamp(),
+    })
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : 'Error creating note in Firestore',
+    )
+  }
+}
+
+export async function updateNoteInDB(note: Note) {
+  try {
+    const { id, createdAt, ...rest } = note
+
+    await setDoc(doc(db, 'notes', id), {
+      ...rest,
+      createdAt: Timestamp.fromDate(new Date(createdAt)),
+    })
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : 'Error updating note in Firestore',
+    )
+  }
+}
+
+export async function deleteNoteInDB(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  try {
+    await deleteDoc(doc(db, 'notes', id))
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : 'Error deleting note in Firestore',
+    )
   }
 }

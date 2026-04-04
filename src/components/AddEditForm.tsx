@@ -1,6 +1,4 @@
-import { useNavigate } from 'react-router'
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import type { Note } from '@/types'
 import { AddEditFormSchema } from '@/schema'
@@ -16,13 +14,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 
 type AddEditFormProps = {
-  onSubmit: (data: Omit<Note, 'id' | 'createdAt'>) => void
+  onSubmit: (data: Omit<Note, 'id' | 'createdAt' | 'userId'>) => Promise<void>
   note?: Note
 }
 
 export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
-  const navigate = useNavigate()
-
   const form = useForm({
     defaultValues: {
       title: note?.title || '',
@@ -31,10 +27,8 @@ export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
     validators: {
       onSubmit: AddEditFormSchema,
     },
-    onSubmit: ({ value }) => {
-      onSubmit(value)
-      toast.success('Note saved successfully')
-      navigate('/')
+    onSubmit: async ({ value }) => {
+      await onSubmit(value)
     },
   })
 

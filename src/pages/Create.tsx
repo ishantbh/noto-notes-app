@@ -1,5 +1,8 @@
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 import type { Note } from '@/types'
-import { useNotesStore } from '@/store'
+import { createNoteInDB } from '@/lib/firestore'
+import { useAuthStore } from '@/store'
 import { AddEditForm } from '@/components'
 import {
   Card,
@@ -10,13 +13,35 @@ import {
 } from '@/components/ui/card'
 
 export default function Create() {
-  const createNote = useNotesStore((state) => state.createNote)
+  const navigate = useNavigate()
 
-  function handleSubmit({ title, content }: Omit<Note, 'id' | 'createdAt'>) {
-    if (!title || !content) return
+  const user = useAuthStore((state) => state.user)
+
+  async function handleSubmit({
+    title,
+    content,
+  }: Omit<Note, 'id' | 'createdAt' | 'userId'>) {
+    if (!title || !content) {
+      toast.error('Title and content are required')
+      return
+    }
+
+    if (!user) {
+      toast.error('You must be logged in to create a note')
+      return
+    }
 
     // Save the note
-    createNote({ title, content })
+    try {
+      await createNoteInDB({ title, content, userId: user.uid })
+
+      toast.success('Note created successfully')
+      navigate('/')
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Error creating note',
+      )
+    }
   }
 
   return (
