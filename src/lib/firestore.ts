@@ -5,6 +5,7 @@ import {
   getDoc,
   serverTimestamp,
   setDoc,
+  Timestamp,
 } from 'firebase/firestore'
 import { db } from '@/firebase/firestore'
 import type { AppUser, Note } from '@/types'
@@ -47,6 +48,23 @@ export async function createNoteInDB(note: Omit<Note, 'id' | 'createdAt'>) {
       error instanceof Error
         ? error.message
         : 'Error creating note in Firestore',
+    )
+  }
+}
+
+export async function updateNoteInDB(note: Note) {
+  try {
+    const { id, createdAt, ...rest } = note
+
+    await setDoc(doc(db, 'notes', id), {
+      ...rest,
+      createdAt: Timestamp.fromDate(new Date(createdAt)),
+    })
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : 'Error updating note in Firestore',
     )
   }
 }
