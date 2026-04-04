@@ -14,7 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 
 type AddEditFormProps = {
-  onSubmit: (data: Omit<Note, 'id' | 'createdAt' | 'userId'>) => void
+  onSubmit: (data: Omit<Note, 'id' | 'createdAt' | 'userId'>) => Promise<void>
   note?: Note
 }
 
@@ -27,8 +27,8 @@ export function AddEditForm({ onSubmit, note }: AddEditFormProps) {
     validators: {
       onSubmit: AddEditFormSchema,
     },
-    onSubmit: ({ value }) => {
-      onSubmit(value)
+    onSubmit: async ({ value }) => {
+      await onSubmit(value)
     },
   })
 
