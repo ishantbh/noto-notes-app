@@ -5,6 +5,7 @@ export type Note = {
   title: string
   content: string
   createdAt: string
+  userId: string
 }
 
 export type AppUser = {
