@@ -1,8 +1,14 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { onAuthStateChanged } from 'firebase/auth'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
+import { useShallow } from 'zustand/react/shallow'
+import { toast } from 'sonner'
 import { auth } from '@/firebase/auth'
-import { useAuthStore, useThemeStore } from '@/store'
+import { db } from '@/firebase/firestore'
+import { getUserFromDB } from '@/lib/firestore'
+import type { AppUser, Note } from '@/types'
+import { useAuthStore, useNotesStore, useThemeStore } from '@/store'
 import { AuthLayout, ProtectedLayout, Root } from '@/layouts'
 import {
   Create,
@@ -14,13 +20,19 @@ import {
   Signup,
 } from '@/pages'
 import { Toaster } from '@/components/ui/sonner'
-import { getUserFromDB } from '@/lib/firestore'
-import type { AppUser } from '@/types'
-import { toast } from 'sonner'
 
 export default function App() {
   const theme = useThemeStore((state) => state.theme)
-  const setUser = useAuthStore((state) => state.setUser)
+  const { user, setUser } = useAuthStore(
+    useShallow((state) => ({ user: state.user, setUser: state.setUser })),
+  )
+  const { createNote, updateNote, deleteNote } = useNotesStore(
+    useShallow((state) => ({
+      createNote: state.createNote,
+      updateNote: state.updateNote,
+      deleteNote: state.deleteNote,
+    })),
+  )
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -59,6 +71,53 @@ export default function App() {
 
     return unsub
   }, [setUser])
+
+  useEffect(() => {
+    if (!user) return
+
+    const notesQuery = query(
+      collection(db, 'notes'),
+      where('userId', '==', user.uid),
+    )
+
+    const unsub = onSnapshot(
+      notesQuery,
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          const id = change.doc.id
+          const data = change.doc.data({ serverTimestamps: 'estimate' })
+          const note = {
+            id,
+            ...data,
+            createdAt: data.createdAt.toDate(),
+          } as Note
+
+          switch (change.type) {
+            case 'added':
+              createNote(note)
+              break
+            case 'modified':
+              updateNote(note)
+              break
+            case 'removed':
+              deleteNote(id)
+              break
+            default:
+              console.error('Unknown change type:', change.type)
+          }
+        })
+      },
+      (error) => {
+        console.error('Error listening to notes:', error)
+
+        toast.error(
+          error instanceof Error ? error.message : 'Error listening to notes',
+        )
+      },
+    )
+
+    return () => unsub()
+  }, [user])
 
   return (
     <>
