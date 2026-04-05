@@ -8,7 +8,8 @@ import { auth } from '@/firebase/auth'
 import { db } from '@/firebase/firestore'
 import { getUserFromDB } from '@/lib/firestore'
 import type { AppUser, Note } from '@/types'
-import { useAuthStore, useNotesStore, useThemeStore } from '@/store'
+import { useAuthStore, useNotesStore } from '@/store'
+import { useThemeEffect } from '@/hooks'
 import { AuthLayout, ProtectedLayout, Root } from '@/layouts'
 import {
   Create,
@@ -22,7 +23,8 @@ import {
 import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
-  const theme = useThemeStore((state) => state.theme)
+  useThemeEffect()
+
   const { user, setUser } = useAuthStore(
     useShallow((state) => ({ user: state.user, setUser: state.setUser })),
   )
@@ -39,24 +41,6 @@ export default function App() {
       deleteNote: state.deleteNote,
     })),
   )
-
-  useEffect(() => {
-    const root = window.document.documentElement
-
-    root.classList.remove('light', 'dark')
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light'
-
-      root.classList.add(systemTheme)
-      return
-    }
-
-    root.classList.add(theme)
-  }, [theme])
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
