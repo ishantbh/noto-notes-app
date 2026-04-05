@@ -1,15 +1,12 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { onAuthStateChanged } from 'firebase/auth'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { useShallow } from 'zustand/react/shallow'
 import { toast } from 'sonner'
-import { auth } from '@/firebase/auth'
 import { db } from '@/firebase/firestore'
-import { getUserFromDB } from '@/lib/firestore'
-import type { AppUser, Note } from '@/types'
+import type { Note } from '@/types'
 import { useAuthStore, useNotesStore } from '@/store'
-import { useThemeEffect } from '@/hooks'
+import { useAuthChangedEffect, useThemeEffect } from '@/hooks'
 import { AuthLayout, ProtectedLayout, Root } from '@/layouts'
 import {
   Create,
@@ -24,10 +21,10 @@ import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
   useThemeEffect()
+  useAuthChangedEffect()
 
-  const { user, setUser } = useAuthStore(
-    useShallow((state) => ({ user: state.user, setUser: state.setUser })),
-  )
+  const user = useAuthStore((state) => state.user)
+
   const {
     setInitialized: setNotesInitialized,
     createNote,
@@ -41,26 +38,6 @@ export default function App() {
       deleteNote: state.deleteNote,
     })),
   )
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
-      let appUser: AppUser | null = null
-
-      if (firebaseUser) {
-        try {
-          appUser = await getUserFromDB(firebaseUser.uid)
-        } catch (error) {
-          toast.error(
-            error instanceof Error ? error.message : 'Error loading user',
-          )
-        }
-      }
-
-      setUser(appUser)
-    })
-
-    return unsub
-  }, [setUser])
 
   useEffect(() => {
     if (!user) return
