@@ -1,11 +1,16 @@
 import { Link } from 'react-router'
 import { NoteCard } from '@/components'
 import { useNotesStore } from '@/store'
+import { Splash } from '@/pages'
 import { Button } from '@/components/ui/button'
 
 export function NotesList() {
+  const initialized = useNotesStore((state) => state.initialized)
+
   const notes = useNotesStore((state) => state.notes)
   const noteIds = Object.keys(notes)
+
+  if (!initialized) return <Splash />
 
   if (noteIds.length === 0) {
     return (

@@ -26,8 +26,14 @@ export default function App() {
   const { user, setUser } = useAuthStore(
     useShallow((state) => ({ user: state.user, setUser: state.setUser })),
   )
-  const { createNote, updateNote, deleteNote } = useNotesStore(
+  const {
+    setInitialized: setNotesInitialized,
+    createNote,
+    updateNote,
+    deleteNote,
+  } = useNotesStore(
     useShallow((state) => ({
+      setInitialized: state.setInitialized,
       createNote: state.createNote,
       updateNote: state.updateNote,
       deleteNote: state.deleteNote,
@@ -106,6 +112,8 @@ export default function App() {
               console.error('Unknown change type:', change.type)
           }
         })
+
+        setNotesInitialized(true)
       },
       (error) => {
         console.error('Error listening to notes:', error)
