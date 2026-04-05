@@ -5,5 +5,6 @@ import NotFound from '@/pages/NotFound'
 import Edit from '@/pages/Edit'
 import Login from '@/pages/Login'
 import Signup from '@/pages/Signup'
+import Splash from '@/pages/Splash'
 
-export { Home, Create, NoteDetails, NotFound, Edit, Login, Signup }
+export { Home, Create, NoteDetails, NotFound, Edit, Login, Signup, Splash }

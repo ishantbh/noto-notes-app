@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router'
 import { useAuthStore } from '@/store'
-import Splash from '@/pages/Splash'
+import { Splash } from '@/pages'
 
 export function ProtectedLayout() {
   const initialized = useAuthStore((state) => state.initialized)
