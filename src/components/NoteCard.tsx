@@ -40,7 +40,7 @@ export function NoteCard({ noteId }: NoteCardProps) {
           </time>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className='grow'>
         <p className='line-clamp-2'>{removeMd(note.content)}</p>
       </CardContent>
 
