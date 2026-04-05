@@ -30,12 +30,13 @@ function EditView({ note }: { note: Note }) {
   async function handleSubmit({
     title,
     content,
+    tags,
   }: Omit<Note, 'id' | 'createdAt' | 'userId'>) {
     if (!title || !content) return
 
     // Save the note
     try {
-      await updateNoteInDB({ ...note, title, content })
+      await updateNoteInDB({ ...note, title, content, tags })
 
       toast.success('Note updated successfully')
       navigate('/')

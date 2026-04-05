@@ -20,6 +20,7 @@ export default function Create() {
   async function handleSubmit({
     title,
     content,
+    tags,
   }: Omit<Note, 'id' | 'createdAt' | 'userId'>) {
     if (!title || !content) {
       toast.error('Title and content are required')
@@ -33,7 +34,7 @@ export default function Create() {
 
     // Save the note
     try {
-      await createNoteInDB({ title, content, userId: user.uid })
+      await createNoteInDB({ title, content, userId: user.uid, tags })
 
       toast.success('Note created successfully')
       navigate('/')
